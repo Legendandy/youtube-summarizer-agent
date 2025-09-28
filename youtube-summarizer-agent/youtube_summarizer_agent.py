@@ -1,6 +1,7 @@
 import os
 import re
 import asyncio
+import random
 from typing import Dict, Any, List, Optional, AsyncIterator
 import httpx
 import requests
@@ -56,6 +57,57 @@ class YouTubeSummarizerAgent(AbstractAgent):
             if match:
                 return match.group(0)
         return None
+    
+    def get_greeting_response(self, prompt_type: str) -> str:
+        """Generate varied responses for common queries"""
+        
+        identity_responses = [
+            "Hello! I'm a YouTube Summarizer Agent specialized in analyzing YouTube videos and creating detailed summaries with timestamps. Share a YouTube URL and I'll break it down for you!",
+            "Hi there! I'm designed to summarize YouTube videos with comprehensive breakdowns and timestamps. Got a video you'd like me to analyze?",
+            "I'm a YouTube video analysis agent! I create detailed summaries of YouTube content with section breakdowns and timestamps. Drop a YouTube link and let's get started!",
+            "Hey! I specialize in turning YouTube videos into structured summaries with timestamps and key insights. Have a video you need summarized?"
+        ]
+        
+        greeting_responses = [
+            "Hello! I specialize in summarizing YouTube videos. If you have a YouTube video link you'd like me to analyze, I'd be happy to create a detailed summary for you!",
+            "Hi there! I'm here to help you understand YouTube videos better through detailed summaries. Share a YouTube URL and I'll get to work!",
+            "Hey! I turn YouTube videos into comprehensive summaries with timestamps. Got a video you need broken down?",
+            "Hello! I analyze YouTube content and create structured summaries. Drop a YouTube link and I'll provide you with a detailed breakdown!"
+        ]
+        
+        general_responses = [
+            "I specialize in YouTube video analysis and summarization. While I can't help with general questions, I'd love to summarize any YouTube video you share!",
+            "I'm focused on creating detailed YouTube video summaries. For other topics, you might want to try a different agent, but I'm great with YouTube content!",
+            "My expertise is in analyzing and summarizing YouTube videos with timestamps and breakdowns. Got a video link you'd like me to work on?"
+        ]
+        
+        if prompt_type == "identity":
+            return random.choice(identity_responses)
+        elif prompt_type == "greeting":
+            return random.choice(greeting_responses)
+        else:
+            return random.choice(general_responses)
+    
+    async def stream_greeting_response(self, response_handler: ResponseHandler, prompt_type: str):
+        """Stream greeting response with proper formatting"""
+        # Show thinking message first
+        await response_handler.emit_text_block(
+            "STATUS", "Thinking about your query..."
+        )
+        
+        response = self.get_greeting_response(prompt_type)
+        
+        # Create text stream for the greeting response
+        greeting_stream = response_handler.create_text_stream("GREETING_RESPONSE")
+        
+        # Stream the response character by character for a nice effect
+        for char in response:
+            await greeting_stream.emit_chunk(char)
+            # Small delay to make the streaming visible
+            await asyncio.sleep(0.01)
+        
+        # Mark the text stream as complete
+        await greeting_stream.complete()
     
     async def get_youtube_transcript(self, video_id: str) -> Dict[str, Any]:
         """Get YouTube transcript with timestamps using Webshare proxy"""
@@ -193,13 +245,27 @@ Remember: This summary will be read by someone who hasn't watched the video. Mak
         
         # Extract YouTube URL from request
         youtube_url = self.find_youtube_url(query.prompt)
+        lower_prompt = query.prompt.lower().strip()
         
-        if not youtube_url:
-            await response_handler.emit_error(
-                "INPUT_ERROR", {"message": "Please provide a valid YouTube URL to summarize."}
-            )
+        # Handle specific identity questions
+        if lower_prompt in ['who are you', 'what do you do', 'what are you', 'who are you?', 'what do you do?', 'what are you?']:
+            await self.stream_greeting_response(response_handler, "identity")
             await response_handler.complete()
             return
+        
+        # Handle general greetings
+        elif lower_prompt in ['hi', 'hello', 'hey', 'hi!', 'hello!', 'hey!']:
+            await self.stream_greeting_response(response_handler, "greeting")
+            await response_handler.complete()
+            return
+        
+        # Handle cases where no YouTube URL is provided
+        elif not youtube_url:
+            await self.stream_greeting_response(response_handler, "general")
+            await response_handler.complete()
+            return
+        
+        # If we get here, they provided a YouTube URL, so continue with normal processing
         
         # Extract video ID
         video_id = self.extract_youtube_video_id(youtube_url)
