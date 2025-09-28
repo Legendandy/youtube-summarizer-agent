@@ -108,23 +108,38 @@ class YouTubeSummarizerAgent(AbstractAgent):
         """Summarize transcript using Fireworks API with streaming"""
         
         # Create the prompt for summarization
-        prompt = f"""Please analyze this YouTube video transcript and provide a comprehensive summary with the following structure:
+        prompt = f"""You are a professional video content analyst. Analyze this YouTube video transcript and provide a comprehensive, detailed summary following this EXACT structure:
 
 ## General Summary
-Provide a 2-3 paragraph overview of the video's main content and key points.
+Write a detailed 3-4 paragraph overview covering:
+- The main topic/subject of the video
+- Key arguments, findings, or points discussed
+- The creator's perspective or stance
+- Overall conclusions or takeaways
+- Target audience and purpose
 
 ## Section Breakdown
-Create subheadings for major topics/sections and include relevant timestamps from the transcript. Use the timestamp format [MM:SS] when referencing specific parts.
+Create detailed subsections with descriptive headings based on the content flow. For each section:
+- Use clear, descriptive subheading names (not generic terms like "Introduction")
+- Include timestamp ranges in format [MM:SS] - [MM:SS] for each section
+- Provide 2-3 sentences summarizing what happens in that time range
+- Include specific details, examples, or data mentioned
+- Quote important statements with their timestamps
+
+RULES YOU MUST FOLLOW:
+1. Be comprehensive - don't skip important details
+2. Use the EXACT timestamp format: [MM:SS] - [MM:SS] for ranges, [MM:SS] for specific moments
+3. Create 4-8 subsections depending on video length and content
+4. Each subsection should be substantial (2-4 sentences minimum)
+5. Include direct quotes when the speaker makes important points
+6. Maintain chronological order based on timestamps
+7. Use descriptive subheading names that reflect the actual content
 
 Here is the transcript with timestamps:
 
 {transcript}
 
-Please ensure your response includes:
-1. A clear general summary
-2. Organized subheadings for different topics
-3. Specific timestamps for key sections
-4. Important quotes or key points with their timestamps"""
+Remember: This summary will be read by someone who hasn't watched the video. Make it detailed enough that they understand the full content and context."""
 
         payload = {
             "model": self.model,
