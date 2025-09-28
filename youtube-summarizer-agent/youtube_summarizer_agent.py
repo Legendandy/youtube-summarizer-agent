@@ -182,24 +182,26 @@ Write a detailed 3-4 paragraph overview covering:
 Create detailed subsections with descriptive headings based on the content flow. For each section:
 - Use clear, descriptive subheading names (not generic terms like "Introduction")
 - Include timestamp ranges in format [MM:SS] - [MM:SS] for each section
-- Provide 2-3 sentences summarizing what happens in that time range
-- Include specific details, examples, or data mentioned
-- Quote important statements with their timestamps
+- Summarize only what the speaker actually says in the transcript during that time range
+- Include specific details, examples, data, or statements mentioned by the speaker
+- DO NOT add meta-commentary like "This section shows..." or "The video highlights..."
+- Simply report what content was covered in that time period
 
-RULES YOU MUST FOLLOW:
-1. Be comprehensive - don't skip important details
+CRITICAL RULES:
+1. Be comprehensive - don't skip important details from the transcript
 2. Use the EXACT timestamp format: [MM:SS] - [MM:SS] for ranges, [MM:SS] for specific moments
 3. Create 4-8 subsections depending on video length and content
-4. Each subsection should be substantial (2-4 sentences minimum)
-5. Include direct quotes when the speaker makes important points
+4. Each subsection should be substantial (3-4 sentences minimum)
+5. Only summarize what the speaker actually said - no interpretation or analysis
 6. Maintain chronological order based on timestamps
-7. Use descriptive subheading names that reflect the actual content
+7. Use descriptive subheading names that reflect the actual content discussed
+8. Never add phrases like "This section demonstrates" or "The section highlights" - just state the content
 
 Here is the transcript with timestamps:
 
 {transcript}
 
-Remember: This summary will be read by someone who hasn't watched the video. Make it detailed enough that they understand the full content and context."""
+Remember: Report only what was actually said in the transcript. Do not add your own interpretations or explanations about what sections accomplish."""
 
         payload = {
             "model": self.model,
