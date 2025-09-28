@@ -286,7 +286,7 @@ Remember: This summary will be read by someone who hasn't watched the video. Mak
             # Create text stream for error response to prevent timeout
             error_stream = response_handler.create_text_stream("ERROR_RESPONSE")
             
-            error_msg = """❌ **Invalid YouTube URL**
+            error_msg = """ **Invalid YouTube URL**
 
 **This could be due to:**
 - Malformed or incomplete YouTube URL
