@@ -197,7 +197,7 @@ Please ensure your response includes:
         
         # Send progress update - using text_block as per framework
         await response_handler.emit_text_block(
-            "STATUS", f"🎥 Extracting transcript from video"
+            "STATUS", f"Extracting transcript from video..."
         )
         
         # Get transcript
@@ -216,7 +216,7 @@ Please ensure your response includes:
         
         # Send progress update
         await response_handler.emit_text_block(
-            "STATUS", "📝 Transcript extracted successfully. Generating summary..."
+            "STATUS", "Transcript extracted successfully. Generating summary..."
         )
         
         # Create text stream for the final response (following framework pattern)
