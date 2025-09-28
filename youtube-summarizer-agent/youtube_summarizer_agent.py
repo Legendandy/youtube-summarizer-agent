@@ -345,7 +345,7 @@ Remember: This summary will be read by someone who hasn't watched the video. Mak
 
 **This could be due to:**
 - Video doesn't have English captions/subtitles
-- Video is private or restricted  
+- Video is private or age restricted 
 - Captions are disabled
 
 **Please try:**
