@@ -130,8 +130,11 @@ class YouTubeSummarizerAgent(AbstractAgent):
                 # Convert to raw data for processing
                 return fetched_transcript.to_raw_data() if hasattr(fetched_transcript, 'to_raw_data') else list(fetched_transcript)
             
-            # Run the blocking operation in a thread pool
-            transcript_data = await asyncio.get_event_loop().run_in_executor(None, _extract_transcript)
+            # Run the blocking operation in a thread pool with timeout
+            transcript_data = await asyncio.wait_for(
+                asyncio.get_event_loop().run_in_executor(None, _extract_transcript),
+                timeout=30.0  # 30 second timeout
+            )
             
             # Format transcript with timestamps
             formatted_transcript = ""
@@ -275,9 +278,36 @@ Remember: This summary will be read by someone who hasn't watched the video. Mak
         # Extract video ID
         video_id = self.extract_youtube_video_id(youtube_url)
         if not video_id:
-            await response_handler.emit_error(
-                "URL_ERROR", {"message": "Could not extract video ID from the provided URL."}
+            # Show thinking message first
+            await response_handler.emit_text_block(
+                "STATUS", "Thinking about your query..."
             )
+            
+            # Create text stream for error response to prevent timeout
+            error_stream = response_handler.create_text_stream("ERROR_RESPONSE")
+            
+            error_msg = """❌ **Invalid YouTube URL**
+
+**This could be due to:**
+- Malformed or incomplete YouTube URL
+- Missing characters in the video ID
+- URL format not recognized
+
+**Please:**
+- Double-check the YouTube URL is correct and complete
+- Ensure the full video ID is included (11 characters)
+
+**Valid YouTube URL formats:**
+- https://youtube.com/watch?v=VIDEO_ID
+- https://youtu.be/VIDEO_ID
+- https://youtube.com/embed/VIDEO_ID"""
+
+            # Stream the error message
+            for char in error_msg:
+                await error_stream.emit_chunk(char)
+                await asyncio.sleep(0.005)
+            
+            await error_stream.complete()
             await response_handler.complete()
             return
         
@@ -290,12 +320,45 @@ Remember: This summary will be read by someone who hasn't watched the video. Mak
         transcript_result = await self.get_youtube_transcript(video_id)
         
         if not transcript_result["success"]:
-            error_msg = (f"Failed to get transcript: {transcript_result['error']}. This could be due to:\n"
-                        f"- Video doesn't have English captions\n"
-                        f"- Video is private or restricted\n"
-                        f"- Captions are disabled\n"
-                        f"- IP rate limiting (proxy may be needed)")
-            await response_handler.emit_error("TRANSCRIPT_ERROR", {"message": error_msg})
+            # Create text stream for error response to prevent timeout
+            error_stream = response_handler.create_text_stream("ERROR_RESPONSE")
+            
+            # Clean up the error message from YouTube transcript API
+            raw_error = str(transcript_result['error'])
+            
+            # Extract key information and create a cleaner error message
+            if "No transcripts were found for any of the requested language codes: ['en']" in raw_error:
+                clean_error = "No English captions available for this video"
+            elif "This video is unavailable" in raw_error:
+                clean_error = "Video is unavailable or private"
+            elif "Subtitles are disabled" in raw_error:
+                clean_error = "Captions are disabled for this video"
+            elif "timeout" in raw_error.lower():
+                clean_error = "Connection timeout while fetching transcript"
+            else:
+                # For other errors, take just the first meaningful line
+                lines = raw_error.split('\n')
+                clean_error = lines[0] if lines else raw_error[:100] + "..." if len(raw_error) > 100 else raw_error
+            
+            error_msg = f""" **Failed to extract transcript from video**
+
+
+**This could be due to:**
+- Video doesn't have English captions/subtitles
+- Video is private or restricted  
+- Captions are disabled
+
+**Please try:**
+- A different video with English captions
+- Ensuring the video is publicly accessible
+- Waiting a moment and trying again"""
+
+            # Stream the error message
+            for char in error_msg:
+                await error_stream.emit_chunk(char)
+                await asyncio.sleep(0.005)
+            
+            await error_stream.complete()
             await response_handler.complete()
             return
         
