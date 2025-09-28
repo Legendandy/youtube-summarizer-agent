@@ -1,0 +1,4 @@
+youtube-transcript-api==0.6.1
+httpx==0.25.0
+sentient-agent-framework
+python-dotenv==1.0.0
