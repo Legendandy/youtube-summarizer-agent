@@ -112,21 +112,26 @@ class YouTubeSummarizerAgent(AbstractAgent):
     async def get_youtube_transcript(self, video_id: str) -> Dict[str, Any]:
         """Get YouTube transcript with timestamps using Webshare proxy"""
         try:
-            # Configure YouTube Transcript API with Webshare proxy
-            ytt_api = YouTubeTranscriptApi(
-                proxy_config=WebshareProxyConfig(
-                    proxy_username="bckefkmt-rotate",
-                    proxy_password="klne0rjlnila",
+            # Run the synchronous transcript extraction in a thread pool to avoid blocking
+            def _extract_transcript():
+                # Configure YouTube Transcript API with Webshare proxy
+                ytt_api = YouTubeTranscriptApi(
+                    proxy_config=WebshareProxyConfig(
+                        proxy_username="bckefkmt-rotate",
+                        proxy_password="klne0rjlnila",
+                    )
                 )
-            )
+                
+                # Get transcript list first, then fetch transcript
+                transcript_list = ytt_api.list(video_id)
+                transcript = transcript_list.find_transcript(['en'])
+                fetched_transcript = transcript.fetch()
+                
+                # Convert to raw data for processing
+                return fetched_transcript.to_raw_data() if hasattr(fetched_transcript, 'to_raw_data') else list(fetched_transcript)
             
-            # Get transcript list first, then fetch transcript
-            transcript_list = ytt_api.list(video_id)
-            transcript = transcript_list.find_transcript(['en'])
-            fetched_transcript = transcript.fetch()
-            
-            # Convert to raw data for processing
-            transcript_data = fetched_transcript.to_raw_data() if hasattr(fetched_transcript, 'to_raw_data') else list(fetched_transcript)
+            # Run the blocking operation in a thread pool
+            transcript_data = await asyncio.get_event_loop().run_in_executor(None, _extract_transcript)
             
             # Format transcript with timestamps
             formatted_transcript = ""
@@ -278,7 +283,7 @@ Remember: This summary will be read by someone who hasn't watched the video. Mak
         
         # Send progress update - using text_block as per framework
         await response_handler.emit_text_block(
-            "STATUS", f"Extracting transcript from video..."
+            "STATUS", f"Thinking about your query..."
         )
         
         # Get transcript
