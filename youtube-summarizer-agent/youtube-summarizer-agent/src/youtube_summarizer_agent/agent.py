@@ -190,7 +190,7 @@ class YouTubeSummarizerAgent(AbstractAgent):
                 
                 final_response_stream = response_handler.create_text_stream("FINAL_RESPONSE")
                 
-                await final_response_stream.emit_chunk("# YouTube Video Summary\n\n")
+                await final_response_stream.emit_chunk("")
                 
                 # Collect summary for caching
                 summary_parts = []
