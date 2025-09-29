@@ -159,7 +159,7 @@ class YouTubeSummarizerAgent(AbstractAgent):
                     summary_text = cached_summary.get('summary', '')
                     for char in summary_text:
                         await final_response_stream.emit_chunk(char)
-                        await asyncio.sleep(0.05)  # Same speed as fresh generation
+                        await asyncio.sleep(0.007)  # Same speed as fresh generation
                     
                     await final_response_stream.complete()
                     await response_handler.complete()
@@ -190,7 +190,7 @@ class YouTubeSummarizerAgent(AbstractAgent):
                 
                 final_response_stream = response_handler.create_text_stream("FINAL_RESPONSE")
                 
-                await final_response_stream.emit_chunk("")
+                await final_response_stream.emit_chunk("# YouTube Video Summary\n\n")
                 
                 # Collect summary for caching
                 summary_parts = []
@@ -214,7 +214,7 @@ class YouTubeSummarizerAgent(AbstractAgent):
                 await final_response_stream.complete()
                 
                 # Cache the summary
-                full_summary = "# YouTube Video Summary\n\n" + "".join(summary_parts)
+                full_summary = "".join(summary_parts)
                 self.cache_manager.set(
                     video_id,
                     full_summary,
