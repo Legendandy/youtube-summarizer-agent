@@ -146,7 +146,7 @@ class YouTubeSummarizerAgent(AbstractAgent):
             }
     
     async def summarize_with_fireworks_stream(self, transcript: str, transcript_data: List[Dict]) -> AsyncIterator[str]:
-        prompt = f"""You are a professional video content analyst. Analyze this YouTube video transcript and provide a comprehensive, detailed summary following this EXACT structure:
+        prompt = f"""You are a professional video content analyst. Analyze this YouTube video transcript and provide a comprehensive, detailed explanation following this EXACT structure:
 
 ## General Summary
 Write a detailed 3-4 paragraph overview covering:
