@@ -1,8 +1,3 @@
-"""
-Summarizer Service
-Handles AI-powered video summarization using Fireworks AI
-"""
-
 import json
 import httpx
 from typing import List, Dict, AsyncIterator
