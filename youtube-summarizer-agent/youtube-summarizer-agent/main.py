@@ -59,11 +59,7 @@ def main():
         print(f"📡 Server: Running with streaming support")
         print("=" * 60)
         
-        # Start background tasks
-        loop = asyncio.get_event_loop()
-        loop.create_task(start_cleanup_tasks(agent))
-        
-        # Run server
+        # Run server (this will handle the event loop internally)
         server.run()
     
     except ValueError as e:
