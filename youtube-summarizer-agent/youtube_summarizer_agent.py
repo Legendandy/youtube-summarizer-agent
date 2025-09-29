@@ -27,8 +27,8 @@ class YouTubeSummarizerAgent(AbstractAgent):
         if not self.fireworks_api_key:
             raise ValueError("FIREWORKS_API_KEY environment variable is required")
         
-        self.fireworks_base_url = "https://api.fireworks.ai/inference/v1/chat/completions"
-        self.model = "accounts/fireworks/models/llama-v3p1-8b-instruct"
+        self.fireworks_base_url = "https://openrouter.ai/api/v1/chat/completions"
+        self.model = "x-ai/grok-4-fast:free"
     
     def extract_youtube_video_id(self, url: str) -> Optional[str]:
         patterns = [
@@ -146,40 +146,74 @@ class YouTubeSummarizerAgent(AbstractAgent):
             }
     
     async def summarize_with_fireworks_stream(self, transcript: str, transcript_data: List[Dict]) -> AsyncIterator[str]:
-        prompt = f"""You are a professional video content analyst. Analyze this YouTube video transcript and provide a comprehensive, detailed explanation following this EXACT structure:
+        prompt = f"""You are a professional video content analyst. You will analyze the following YouTube transcript and produce a detailed structured summary.
+You MUST follow the EXACT template and formatting rules below. No deviations are allowed.
+        
+        
 
-## General Summary
-Write a detailed 3-4 paragraph overview covering:
-- The main topic/subject of the video
-- Key arguments, findings, or points discussed
-- The creator's perspective or stance
-- Overall conclusions or takeaways
-- Target audience and purpose
+YouTube Video Summary
 
-## Section Breakdown
-Create detailed subsections with descriptive headings based on the content flow. For each section:
-- Use clear, descriptive subheading names (not generic terms like "Introduction")
-- Include timestamp ranges in format [MM:SS] - [MM:SS] for each section
-- Summarize only what the speaker actually says in the transcript during that time range
-- Include specific details, examples, data, or statements mentioned by the speaker
-- DO NOT add meta-commentary like "This section shows..." or "The video highlights..."
-- Simply report what content was covered in that time period
+General Summary
 
-CRITICAL RULES:
-1. Be comprehensive - don't skip important details from the transcript
-2. Use the EXACT timestamp format: [MM:SS] - [MM:SS] for ranges, [MM:SS] for specific moments
-3. Create 4-8 subsections depending on video length and content
-4. Each subsection should be substantial (3-4 sentences minimum)
-5. Only summarize what the speaker actually said - no interpretation or analysis
-6. Maintain chronological order based on timestamps
-7. Use descriptive subheading names that reflect the actual content discussed
-8. Never add phrases like "This section demonstrates" or "The section highlights" - just state the content
+Write a detailed 2-3 paragraph overview of the video.
+
+Focus strictly on what the creator says, demonstrates, or shows in the video.
+
+Include the following points without interpreting, editorializing, or giving “takeaways”:
+
+The main topic or subject of the video.
+
+Key items, products, or concepts presented.
+
+Important demonstrations, comparisons, or examples shown.
+
+The creator’s perspective, style, or tone (e.g., conversational, enthusiastic).
+
+Any notable features, measurements, or details emphasized in the video.
+
+Avoid phrases like “overall conclusions,” “takeaways,” or “key arguments.”
+
+Present the summary in factual, descriptive language, as if reporting exactly what happens in the video.
+
+Keep the audience in mind only insofar as the creator mentions them or it is obvious from the content.
+
+The goal is a faithful, comprehensive overview of the video content, not an analysis or recommendation.
+
+Section Breakdown
+
+Create 4–8 subsections based on the flow of the transcript. For each section:
+
+Use a descriptive subheading (never generic names like “Introduction,” “Conclusion,” or “Summary”)
+
+Add a timestamp range in the format: [MM:SS] - [MM:SS]
+
+Write at least 4 sentences summarizing what was said only in that time range
+
+Include specific details, examples, or comparisons mentioned
+
+No interpretation, no commentary — just report what the speaker actually said
+
+Maintain strict chronological order
+
+CRITICAL RULES
+
+Do not add, remove, or rename headings — only use General Summary and Section Breakdown.
+
+Do not merge unrelated parts of the transcript — create a new subsection if the topic shifts.
+
+Every subsection must be substantial (4+ sentences).
+
+Every subsection must have a clear descriptive name that reflects the content.
+
+Every timestamp range must be correct and formatted [MM:SS] - [MM:SS].
+
+Do not shorten the general summary — always 4 full paragraphs.
+
+No filler commentary like “This section highlights” — just describe what was said.
 
 Here is the transcript with timestamps:
 
-{transcript}
-
-Remember: Report only what was actually said in the transcript. Do not add your own interpretations or explanations about what sections accomplish."""
+{transcript}"""
 
         payload = {
             "model": self.model,
