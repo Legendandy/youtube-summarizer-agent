@@ -14,7 +14,7 @@ class FireworksConfig:
     BASE_URL = "https://openrouter.ai/api/v1/chat/completions"
     
     # Model configuration
-    MODEL = "x-ai/grok-4-fast:free"
+    MODEL = "z-ai/glm-4.5-air:free"
     MAX_TOKENS = 2048
     TEMPERATURE = 0.3
     TOP_P = 0.9
