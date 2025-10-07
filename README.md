@@ -242,9 +242,6 @@ Follow the instructions and query away!
 Enter your message: can you summarize this youtube video https://youtu.be/dQw4w9WgXcQ
 ```
 
-Response Format with Sentient Agent Client
-
-
 ## Summary Format
 
 The agent generates structured summaries with:
