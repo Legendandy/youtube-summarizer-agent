@@ -193,6 +193,20 @@ curl -N --location 'http://localhost:8000/assist' \
 }'
 ```
 
+3. **Response Format with cURL:**
+
+The agent uses Server-Sent Events (SSE) to stream responses in real-time:
+
+```
+data: {"type": "text_block", "id": "STATUS", "text": "Thinking about your query..."}
+
+data: {"type": "text_chunk", "id": "FINAL_RESPONSE", "text": "# YouTube"}
+
+data: {"type": "text_chunk", "id": "FINAL_RESPONSE", "text": " Video Summary"}
+
+data: {"type": "done"}
+```
+
 ### Option 2: Using Sentient Agent Client
 
 Clone the repository:
@@ -228,19 +242,8 @@ Follow the instructions and query away!
 Enter your message: can you summarize this youtube video https://youtu.be/dQw4w9WgXcQ
 ```
 
-## Response Format with cURL
+Response Format with Sentient Agent Client
 
-The agent uses Server-Sent Events (SSE) to stream responses in real-time:
-
-```
-data: {"type": "text_block", "id": "STATUS", "text": "Thinking about your query..."}
-
-data: {"type": "text_chunk", "id": "FINAL_RESPONSE", "text": "# YouTube"}
-
-data: {"type": "text_chunk", "id": "FINAL_RESPONSE", "text": " Video Summary"}
-
-data: {"type": "done"}
-```
 
 ## Summary Format
 
