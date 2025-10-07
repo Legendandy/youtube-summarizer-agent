@@ -1,0 +1,119 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "youtube-summarizer-agent"
+version = "1.0.0"
+description = "AI agent that generates detailed, timestamped summaries of YouTube videos"
+authors = [
+    {name = "Your Name", email = "your.email@example.com"}
+]
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.12"
+keywords = ["youtube", "summarizer", "ai", "sentient", "agent", "llm"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
+    "Topic :: Multimedia :: Video",
+]
+
+dependencies = [
+    "annotated-types==0.7.0",
+    "anyio==4.9.0",
+    "certifi==2025.1.31",
+    "click==8.1.8",
+    "cuid2==2.0.1",
+    "fastapi==0.115.12",
+    "h11==0.14.0",
+    "httpcore==1.0.8",
+    "httpx==0.28.1",
+    "pydantic==2.11.3",
+    "pydantic_core==2.33.1",
+    "python-dotenv==1.0.0",
+    "python-ulid==3.0.0",
+    "sentient-agent-framework==0.2.0",
+    "simple-sse-client==0.1.1",
+    "starlette==0.46.2",
+    "typing-inspection==0.4.0",
+    "typing_extensions==4.13.2",
+    "ulid-py==1.1.0",
+    "uvicorn==0.34.0",
+    "youtube-transcript-api==1.2.2",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-asyncio>=0.21.0",
+    "pytest-cov>=4.1.0",
+    "black>=23.7.0",
+    "ruff>=0.0.285",
+    "mypy>=1.5.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/yourusername/youtube-summarizer-agent"
+Documentation = "https://github.com/yourusername/youtube-summarizer-agent#readme"
+Repository = "https://github.com/yourusername/youtube-summarizer-agent"
+Issues = "https://github.com/yourusername/youtube-summarizer-agent/issues"
+
+[project.scripts]
+youtube-summarizer = "main:main"
+
+[tool.setuptools]
+packages = ["src.youtube_summarizer_agent", "utils", "config"]
+
+[tool.setuptools.package-data]
+youtube_summarizer_agent = ["py.typed"]
+
+[tool.black]
+line-length = 100
+target-version = ['py312']
+include = '\.pyi?$'
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "B",   # flake8-bugbear
+    "C4",  # flake8-comprehensions
+    "UP",  # pyupgrade
+]
+ignore = [
+    "E501",  # line too long (handled by black)
+    "B008",  # do not perform function calls in argument defaults
+    "C901",  # too complex
+]
+
+[tool.mypy]
+python_version = "3.12"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+check_untyped_defs = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+asyncio_mode = "auto"
+addopts = "--cov=src --cov-report=term-missing --cov-report=html"
+
+---
