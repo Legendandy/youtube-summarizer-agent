@@ -3,7 +3,7 @@ import asyncio
 from dotenv import load_dotenv
 from sentient_agent_framework import DefaultServer
 from src.youtube_summarizer_agent import YouTubeSummarizerAgent
-from config.fireworks_config import FireworksConfig
+from config.openrouter_config import OpenRouterConfig
 
 load_dotenv()
 
@@ -26,14 +26,14 @@ async def start_cleanup_tasks(agent):
 def main():
     """Main entry point"""
     # Validate environment variables
-    if not os.getenv("FIREWORKS_API_KEY"):
-        print("❌ Error: FIREWORKS_API_KEY environment variable is required")
-        print("Set it with: export FIREWORKS_API_KEY='your-api-key-here'")
+    if not os.getenv("OPENROUTER_API_KEY"):
+        print("❌ Error: OPENROUTER_API_KEY environment variable is required")
+        print("Set it with: export OPENROUTER_API_KEY='your-api-key-here'")
         return
     
     try:
-        # Validate Fireworks configuration
-        FireworksConfig.validate()
+        # Validate OpenRouter configuration
+        OpenRouterConfig.validate()
         
         # Initialize agent
         agent = YouTubeSummarizerAgent()
@@ -46,8 +46,8 @@ def main():
         print("🚀 Starting YouTube Summarizer Agent")
         print("=" * 60)
         print(f"📝 Language Support: English captions only")
-        print(f"🔥 AI Provider: Fireworks AI")
-        print(f"🤖 Model: {FireworksConfig.MODEL}")
+        print(f"🔥 AI Provider: OpenRouter AI")
+        print(f"🤖 Model: {OpenRouterConfig.MODEL}")
         print(f"💾 Cache: Enabled (7 day TTL)")
         print(f"🔒 Security: Input validation enabled")
         print(f"⏱️  Rate Limiting (Video Summarization Only):")

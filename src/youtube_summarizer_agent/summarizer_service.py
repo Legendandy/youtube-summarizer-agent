@@ -1,15 +1,15 @@
 import json
 import httpx
 from typing import List, Dict, AsyncIterator
-from config.fireworks_config import FireworksConfig
+from config.openrouter_config import OpenRouterConfig
 
 
 class SummarizerService:
     """Generates AI summaries of video transcripts"""
     
     def __init__(self):
-        """Initialize summarizer with Fireworks configuration"""
-        self.config = FireworksConfig()
+        """Initialize summarizer with OpenRouter configuration"""
+        self.config = OpenRouterConfig()
         self.config.validate()
     
     def _build_prompt(self, transcript: str) -> str:

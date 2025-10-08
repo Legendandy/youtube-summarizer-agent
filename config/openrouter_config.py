@@ -4,11 +4,11 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-class FireworksConfig:
-    """Configuration for Fireworks AI summarization"""
+class OpenRouterConfig:
+    """Configuration for OpenRouter AI summarization"""
     
     # API credentials
-    API_KEY = os.getenv("FIREWORKS_API_KEY")
+    API_KEY = os.getenv("OPENROUTER_API_KEY")
     
     # API endpoints
     BASE_URL = "https://openrouter.ai/api/v1/chat/completions"
@@ -27,7 +27,7 @@ class FireworksConfig:
     def validate(cls):
         """Validates that required configuration is present"""
         if not cls.API_KEY:
-            raise ValueError("FIREWORKS_API_KEY environment variable is required")
+            raise ValueError("OPENROUTER_API_KEY environment variable is required")
         return True
     
     @classmethod
