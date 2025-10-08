@@ -31,7 +31,7 @@ sudo apt install git nginx certbot python3-certbot-nginx -y
 ```bash
 # Clone repository
 cd /opt
-sudo git clone https://github.com/yourusername/youtube-summarizer-agent.git
+sudo git clone https://github.com/Legendandy/youtube-summarizer-agent.git
 cd youtube-summarizer-agent
 
 # Create virtual environment
