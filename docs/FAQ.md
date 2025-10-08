@@ -49,7 +49,7 @@ curl -N --location 'http://localhost:8000/assist' \
 Wait for the cooldown period (shown in error message).
 
 ### Q: Can I change the AI model?
-**A:** Yes! Edit `config/fireworks_config.py` and change the `MODEL` variable to any OpenRouter-supported model.
+**A:** Yes! Edit `config/openrouter_config.py` and change the `MODEL` variable to any OpenRouter-supported model.
 
 ### Q: How does caching work?
 **A:** Summaries are cached for 7 days using the video ID as the key. Subsequent requests for the same video return instantly.
@@ -61,10 +61,10 @@ Wait for the cooldown period (shown in error message).
 
 ## Troubleshooting
 
-### Q: "FIREWORKS_API_KEY environment variable is required"
+### Q: "OPENROUTER_API_KEY environment variable is required"
 **A:** Create a `.env` file in the project root with:
 ```
-FIREWORKS_API_KEY=your_key_here
+OPENROUTER_API_KEY=your_key_here
 ```
 
 ### Q: Agent hangs on transcript extraction
