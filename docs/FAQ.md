@@ -8,7 +8,7 @@
 ### Q: Is it free to use?
 **A:** The agent is open source (MIT license), but you need:
 - OpenRouter API key (some free models available)
-- Webshare proxy subscription (optional but recommended)
+- Webshare rotating proxy subscription (compulsory)
 
 ### Q: What languages are supported?
 **A:** Currently only English captions/subtitles. Multi-language support is planned.
