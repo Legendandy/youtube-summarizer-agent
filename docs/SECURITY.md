@@ -82,5 +82,4 @@ Include the following information:
 
 ## Security Contacts
 
-- **Security Team**: security@yourdomain.com
-- **Project Maintainer**: your.email@example.com
+- **Project Maintainer**: olasanmiayoola@gmail.com
