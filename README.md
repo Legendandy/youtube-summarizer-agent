@@ -39,7 +39,7 @@ youtube-summarizer-agent/
 │   ├── security.py                  # Input validation & security
 │   └── rate_limiter.py              # Rate limiting logic
 ├── config/
-│   ├── fireworks_config.py          # AI model configuration
+│   ├── openrouter_config.py          # AI model configuration
 │   └── youtube_config.py            # YouTube API configuration
 ├── main.py                          # Application entry point
 ├── .env.example                     # Environment variables template
@@ -88,7 +88,7 @@ Edit `.env` and add your API keys:
 
 ```env
 # OpenRouter API Key (get from https://openrouter.ai/)
-FIREWORKS_API_KEY=your_openrouter_api_key_here
+OPENROUTER_API_KEY=your_openrouter_api_key_here
 
 # Webshare Proxy Credentials (get from https://webshare.io/)
 YOUTUBE_PROXY_USERNAME=your_proxy_username
@@ -108,7 +108,7 @@ You should see output like:
 🚀 Starting YouTube Summarizer Agent
 ============================================================
 📝 Language Support: English captions only
-🔥 AI Provider: Fireworks AI
+🔥 AI Provider: Openrouter AI
 🤖 Model: z-ai/glm-4.5-air:free
 💾 Cache: Enabled (7 day TTL)
 🔒 Security: Input validation enabled
@@ -295,7 +295,7 @@ Protects against:
 
 ### AI Model Settings
 
-Edit `config/fireworks_config.py`:
+Edit `config/openrouter_config.py`:
 
 ```python
 MODEL = "z-ai/glm-4.5-air:free"  # Change model
@@ -328,9 +328,9 @@ self.cache_manager = CacheManager(
 
 ## Troubleshooting
 
-### "FIREWORKS_API_KEY environment variable is required"
+### "OPENROUTER_API_KEY environment variable is required"
 - Ensure `.env` file exists in project root
-- Add your OpenRouter API key: `FIREWORKS_API_KEY=sk-...`
+- Add your OpenRouter API key: `OPENROUTER_API_KEY=sk-...`
 
 ### "No English captions available for this video"
 - Video doesn't have English subtitles/captions
@@ -367,7 +367,7 @@ self.cache_manager = CacheManager(
   - `rate_limiter.py`: Rate limiting logic
 
 - **config/**: Configuration modules
-  - `fireworks_config.py`: AI model settings
+  - `openrouter_config.py`: AI model settings
   - `youtube_config.py`: YouTube API settings
 
 ### Running Tests
