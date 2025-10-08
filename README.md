@@ -59,7 +59,7 @@ youtube-summarizer-agent/
 ### Step 1: Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/youtube-summarizer-agent.git
+git clone https://github.com/Legendandy/youtube-summarizer-agent.git
 cd youtube-summarizer-agent
 ```
 
@@ -416,8 +416,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Support
 
-- **Issues**: [GitHub Issues](https://github.com/yourusername/youtube-summarizer-agent/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/youtube-summarizer-agent/discussions)
+- **Issues**: [GitHub Issues](https://github.com/Legendandy/youtube-summarizer-agent/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/Legendandy/youtube-summarizer-agent/discussions)
 - **Email**: olasanmiayoola@gmail.com
 
 ---
