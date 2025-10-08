@@ -100,7 +100,7 @@ FIREWORKS_API_KEY=your_key_here
 - Authentication (not included - add if needed)
 
 ### Q: How do I report security issues?
-**A:** Email security@yourdomain.com (see SECURITY.md)
+**A:** Email olasanmiayoola@gmail.com (see SECURITY.md)
 
 ---
 
@@ -139,73 +139,8 @@ FIREWORKS_API_KEY=your_key_here
 
 - **GitHub Issues**: Bug reports and feature requests
 - **GitHub Discussions**: General questions and ideas
-- **Email**: your.email@example.com
+- **Email**: olasanmiayoola@gmail.com
 
 ---
 
-# .github/ISSUE_TEMPLATE/bug_report.md
 
----
-name: Bug report
-about: Create a report to help us improve
-title: '[BUG] '
-labels: bug
-assignees: ''
----
-
-**Describe the bug**
-A clear and concise description of what the bug is.
-
-**To Reproduce**
-Steps to reproduce the behavior:
-1. Run command '...'
-2. Send query '....'
-3. See error
-
-**Expected behavior**
-A clear and concise description of what you expected to happen.
-
-**Actual behavior**
-What actually happened.
-
-**Error messages**
-```
-Paste any error messages here
-```
-
-**Environment:**
- - OS: [e.g. Ubuntu 22.04]
- - Python version: [e.g. 3.12.1]
- - Agent version: [e.g. 1.0.0]
-
-**Additional context**
-Add any other context about the problem here.
-
----
-
-# .github/ISSUE_TEMPLATE/feature_request.md
-
----
-name: Feature request
-about: Suggest an idea for this project
-title: '[FEATURE] '
-labels: enhancement
-assignees: ''
----
-
-**Is your feature request related to a problem? Please describe.**
-A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
-
-**Describe the solution you'd like**
-A clear and concise description of what you want to happen.
-
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
-
-**Additional context**
-Add any other context or screenshots about the feature request here.
-
-**Would you be willing to contribute this feature?**
-- [ ] Yes, I can submit a PR
-- [ ] No, but I can help test
-- [ ] No, just suggesting
