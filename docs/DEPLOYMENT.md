@@ -158,7 +158,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - FIREWORKS_API_KEY=${FIREWORKS_API_KEY}
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
       - YOUTUBE_PROXY_USERNAME=${YOUTUBE_PROXY_USERNAME}
       - YOUTUBE_PROXY_PASSWORD=${YOUTUBE_PROXY_PASSWORD}
     volumes:
@@ -205,7 +205,7 @@ echo "web: python main.py" > Procfile
 
 # Deploy
 heroku create youtube-summarizer
-heroku config:set FIREWORKS_API_KEY=your_key
+heroku config:set OPENROUTER_API_KEY=your_key
 git push heroku main
 ```
 
