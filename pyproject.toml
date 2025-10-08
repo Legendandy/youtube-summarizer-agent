@@ -7,7 +7,7 @@ name = "youtube-summarizer-agent"
 version = "1.0.0"
 description = "AI agent that generates detailed, timestamped summaries of YouTube videos"
 authors = [
-    {name = "Your Name", email = "your.email@example.com"}
+    {name = "LegendAndy", email = "olasanmiayoola@gmail.com"}
 ]
 readme = "README.md"
 license = {text = "MIT"}
@@ -59,10 +59,10 @@ dev = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/yourusername/youtube-summarizer-agent"
-Documentation = "https://github.com/yourusername/youtube-summarizer-agent#readme"
-Repository = "https://github.com/yourusername/youtube-summarizer-agent"
-Issues = "https://github.com/yourusername/youtube-summarizer-agent/issues"
+Homepage = "https://github.com/Legendandy/youtube-summarizer-agent"
+Documentation = "https://github.com/Legendandy/youtube-summarizer-agent#readme"
+Repository = "https://github.com/Legendandy/youtube-summarizer-agent"
+Issues = "https://github.com/Legendandy/youtube-summarizer-agent/issues"
 
 [project.scripts]
 youtube-summarizer = "main:main"
